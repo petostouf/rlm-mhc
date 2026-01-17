@@ -1,4 +1,4 @@
-# RLM-mHC
+# RLM-mHC-1B
 
 **Recursive Language Model with Manifold-Constrained Hyper-Connections**
 
