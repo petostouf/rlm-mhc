@@ -1,0 +1,24 @@
+# RLM-mHC Main Configuration
+# Uses Hydra for configuration management
+
+defaults:
+  - model: base_1b
+  - training: finetune
+  - _self_
+
+# Runtime overrides
+seed: 42
+device: cuda
+debug: false
+
+# Paths
+output_dir: outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+checkpoint_dir: ${output_dir}/checkpoints
+log_dir: ${output_dir}/logs
+
+hydra:
+  run:
+    dir: ${output_dir}
+  sweep:
+    dir: outputs/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}

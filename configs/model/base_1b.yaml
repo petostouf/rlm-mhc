@@ -1,0 +1,35 @@
+# RLM-mHC 1.3B Parameter Model Configuration
+# Based on architecture document specifications
+
+model:
+  # Core dimensions
+  hidden_dim: 2048
+  num_layers: 24
+  num_heads: 16
+  head_dim: 128  # hidden_dim / num_heads
+  ffn_dim: 5461  # 8/3 * hidden_dim (SwiGLU)
+  vocab_size: 32000
+  max_seq_len: 8192
+
+  # Regularization
+  dropout: 0.0
+  attention_dropout: 0.0
+
+  # mHC Configuration
+  mhc_enabled: true
+  mhc_flows: 4
+  mhc_sinkhorn_iters: 20
+
+  # Position encoding (RoPE)
+  rope_theta: 10000.0
+
+  # Training optimizations
+  gradient_checkpointing: true
+
+# Estimated parameter count:
+# - Embeddings: 32000 * 2048 = 65.5M
+# - Per layer (Attention): 4 * 2048^2 = 16.8M
+# - Per layer (FFN): 3 * 2048 * 5461 = 33.5M
+# - Per layer (mHC): ~2M
+# - Total per layer: ~52M
+# - Total: 65.5M + 24 * 52M = ~1.3B
